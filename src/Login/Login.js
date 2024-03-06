@@ -5,31 +5,33 @@ import { signInWithEmailAndPassword } from "../Service/SupabaseService";
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const errorMsg ='';
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (e) => {
         const { type, value } = e.target;
         if (type === 'text') {
           setEmail(value);
+          setErrorMessage('');
         } else if (type === 'password') {
+            setErrorMessage('');
           setPassword(value);
         }
       };
 
-      const handleSubmit =() => {
-            if(email && password){
-                try{
-                    signInWithEmailAndPassword(email, password);
-                }
-                catch(error){
-                    errorMsg = 'Error with Logging in! Try again';
-                }
-                
+      const handleSubmit = async() => {
+        try {
+            if (email && password) {
+              // Use the signInWithEmailAndPassword function
+              const user = await signInWithEmailAndPassword(email, password);
+              console.log("User signed in:", user);
+            } else {
+              throw new Error("Please provide valid inputs.");
             }
-            else{
-                alert('Please provide valid inputs.');
-            }
-        }
+          } catch (error) {
+            setErrorMessage(error.message);
+            console.error("Sign-in error:", error.message);
+          }
+        };
 
     return(
         <div>
@@ -37,13 +39,11 @@ const Login = () => {
                 <h2>Login</h2>
                 <input type="text" placeholder="Email" value={email} onChange={handleInputChange}></input>
                 <input type="password" placeholder="Password" value={password} onChange={handleInputChange}></input>
-                <h4>{errorMsg}</h4>
+                <h4 className="error-msg">{errorMessage}</h4>
                 <button type="submit" onClick={handleSubmit}>Login</button>
              </div>
         </div> 
     )
 }
-
-
 
 export default Login;

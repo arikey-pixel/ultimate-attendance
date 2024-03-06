@@ -39,3 +39,7 @@ button:hover{
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.error-msg{
+    color: red;
+}
