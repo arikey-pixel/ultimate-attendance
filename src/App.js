@@ -1,13 +1,26 @@
 import './App.css';
+import ReactDOM from "react-dom/client";
+import Home from './Home/Home';
 import Login from './Login/Login';
+import { BrowserRouter as Router, Route, Switch, BrowserRouter, Routes } from 'react-router-dom';
 
-function App() {
+export default function App() {
   return(
     <div className='App'>
-          <Login/>
+      <BrowserRouter>
+      <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/Login" element={<Login/>} />
+      </Routes>
+    </BrowserRouter>
     </div>
+
+
+
+
 
   )
 }
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
